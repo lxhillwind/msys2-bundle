@@ -1,0 +1,8 @@
+case "$PATH" in
+    *:/usr/bin|/usr/bin:*|*:/usr/bin:*) ;;
+    *) export PATH=/usr/bin:"$PATH" ;;
+esac
+
+if [ -z "$HOME" ] || ! [ -e "$HOME" ]; then
+    export HOME="$USERPROFILE"
+fi

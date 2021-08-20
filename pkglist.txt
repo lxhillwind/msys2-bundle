@@ -1,0 +1,12 @@
+coreutils
+findutils
+gawk
+grep
+less
+mintty
+p7zip
+rsync
+sed
+tar
+zsh
+--assume=perl

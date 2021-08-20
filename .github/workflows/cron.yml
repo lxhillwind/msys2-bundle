@@ -1,0 +1,54 @@
+name: Build Auto
+
+on:
+  schedule:
+  - cron: '0 0 1 * *'
+
+jobs:
+
+  build-linux:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
+    - name: Generate artifacts
+      run: sh package.sh
+
+    - name: Set version
+      id: latest-ver-get
+      run: printf '::set-output name=latest::%s\n' $(date +%Y%m%d)
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.latest-ver-get.outputs.latest }}
+        release_name: Package ${{ steps.latest-ver-get.outputs.latest }}
+        draft: false
+        prerelease: false
+        body: Package ${{ steps.latest-ver-get.outputs.latest }}
+
+    - name: Upload Release Asset i686
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path: ./i686.7z
+        asset_name: ${{ steps.latest-ver-get.outputs.latest }}-i686.7z
+        asset_content_type: application/x-7z-compressed
+
+    - name: Upload Release Asset x86_64
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path: ./x86_64.7z
+        asset_name: ${{ steps.latest-ver-get.outputs.latest }}-x86_64.7z
+        asset_content_type: application/x-7z-compressed
