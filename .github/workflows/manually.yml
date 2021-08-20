@@ -3,9 +3,6 @@ name: Build Manually
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: 'vim tagname to build (example: v7.2; leave empty for latest)'
-        required: false
       reason:
         description: 'why building this version manually (shown in release note)'
         required: true
@@ -25,7 +22,7 @@ jobs:
 
     - name: Set version
       id: latest-ver-get
-      run: printf '::set-output name=latest::%s\n' ${{ github.event.inputs.version }}
+      run: printf '::set-output name=latest::%s\n' $(date +%Y%m%d_%H%M%S)
 
     - name: Create Release
       id: create_release
