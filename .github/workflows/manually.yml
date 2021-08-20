@@ -9,7 +9,7 @@ on:
 
 jobs:
 
-  build-linux:
+  main:
 
     runs-on: ubuntu-latest
 

@@ -4,7 +4,7 @@ set -e
 
 cd "$(dirname "$0")"
 
-docker run --rm -i -v $PWD/msys2/:/data/ -w /data alpine:latest sh -s <<\EOF
+docker run --rm -i -v "$PWD":/data/ -w /data alpine:latest sh -s <<\EOF
 apk add pacman p7zip
 
 mkdir -p /usr/share/pacman/keyrings
