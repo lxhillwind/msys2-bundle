@@ -1,4 +1,5 @@
 coreutils
+file
 findutils
 gawk
 grep
