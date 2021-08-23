@@ -9,7 +9,6 @@ sed
 gawk
 
 less
-
 file
 
 rsync
@@ -23,3 +22,5 @@ bzip2
 xz
 lzop
 lz4
+
+procps-ng
