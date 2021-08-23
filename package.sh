@@ -17,7 +17,7 @@ for ARCH in i686 x86_64; do
     mkdir -p "$ARCH"/var/lib/pacman
     cp -r etc "$ARCH"/
     pacman --config pacman.conf --arch "$ARCH" -r "$ARCH" -Sy
-    pacman --config pacman.conf --arch "$ARCH" -r "$ARCH" -S --noconfirm $(cat pkglist.txt)
+    pacman --config pacman.conf --arch "$ARCH" -r "$ARCH" -S --noconfirm $(grep -v '^#' pkglist.txt)
     (cd "$ARCH" && 7z a ../"$ARCH".7z etc usr;)
 done
 EOF
