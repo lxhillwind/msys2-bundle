@@ -27,8 +27,9 @@ jobs:
     - name: Checksum
       id: checksum
       run: |
-        printf '::set-output name=i686::%s\n' $(sha1sum i686.7z);
-        printf '::set-output name=x86_64::%s\n' $(sha1sum x86_64.7z);
+        printf '::set-output name=i686::%s\n' $(sha1sum i686.7z | cut -d' ' -f1);
+        printf '::set-output name=x86_64::%s\n' $(sha1sum x86_64.7z | cut -d' ' -f1);
+      # fix vim hi '
 
     - name: Create Release
       id: create_release
