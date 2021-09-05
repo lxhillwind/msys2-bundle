@@ -24,6 +24,12 @@ jobs:
       id: latest-ver-get
       run: printf '::set-output name=latest::%s\n' $(date +%Y%m%d_%H%M%S)
 
+    - name: Checksum
+      id: checksum
+      run: |
+        printf '::set-output name=i686::%s\n' $(sha1sum i686.7z);
+        printf '::set-output name=x86_64::%s\n' $(sha1sum x86_64.7z);
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -34,7 +40,13 @@ jobs:
         release_name: Package ${{ steps.latest-ver-get.outputs.latest }}
         draft: false
         prerelease: true
-        body: ${{ github.event.inputs.reason }}
+        body: |
+          ${{ github.event.inputs.reason }}
+
+          sha1sum:
+
+          - i686.7z: ${{ steps.checksum.outputs.i686 }}
+          - x86_64.7z: ${{ steps.checksum.outputs.x86_64 }}
 
     - name: Upload Release Asset i686
       uses: actions/upload-release-asset@v1
@@ -43,7 +55,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
         asset_path: ./i686.7z
-        asset_name: ${{ steps.latest-ver-get.outputs.latest }}-i686.7z
+        asset_name: i686.7z
         asset_content_type: application/x-7z-compressed
 
     - name: Upload Release Asset x86_64
@@ -53,5 +65,5 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
         asset_path: ./x86_64.7z
-        asset_name: ${{ steps.latest-ver-get.outputs.latest }}-x86_64.7z
+        asset_name: x86_64.7z
         asset_content_type: application/x-7z-compressed
