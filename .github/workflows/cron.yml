@@ -43,8 +43,8 @@ jobs:
 
           sha1sum:
 
-          - ${{ steps.checksum.outputs.i686 }} i686.7z
-          - ${{ steps.checksum.outputs.x86_64 }} x86_64.7z
+          - ${{ steps.checksum.outputs.i686 }}  i686.7z
+          - ${{ steps.checksum.outputs.x86_64 }}  x86_64.7z
 
     - name: Upload Release Asset i686
       uses: actions/upload-release-asset@v1
