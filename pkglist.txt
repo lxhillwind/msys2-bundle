@@ -12,6 +12,9 @@ gawk
 less
 file
 
+openssh
+--assume=tcl
+
 rsync
 --assume=perl
 
