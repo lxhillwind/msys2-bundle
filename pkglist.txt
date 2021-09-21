@@ -2,8 +2,9 @@ mintty
 zsh
 
 coreutils
-grep
+diffutils
 findutils
+grep
 
 sed
 gawk
