@@ -16,8 +16,10 @@ pacman-key --config pacman.conf --populate msys2
 for ARCH in x86_64; do
     mkdir -p "$ARCH"/var/lib/pacman
     cp -r etc "$ARCH"/
+    cp mintty-start.bat "$ARCH"/usr/bin/
     pacman --config pacman.conf --arch "$ARCH" -r "$ARCH" -Sy
     pacman --config pacman.conf --arch "$ARCH" -r "$ARCH" -S --noconfirm $(grep -v '^#' pkglist.txt)
-    (cd "$ARCH" && 7z a ../"$ARCH".7z etc usr;)
+    mkdir -p "$ARCH"/tmp  # required for bash / tmux.
+    (cd "$ARCH" && 7z a ../"$ARCH".7z etc usr tmp;)
 done
 EOF

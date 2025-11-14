@@ -12,3 +12,8 @@ edit [pacman.conf](pacman.conf) (msys2 mirror) and
 - run package.sh
 
 will generate `x86_64.7z` containing `usr/` / `etc/`.
+
+## use it
+
+create shortcut to [mintty-start.bat](mintty-start.bat) (which is also
+bundled into x86_64.7z: /usr/bin/)
