@@ -1,3 +1,6 @@
+# provides msys-2.0.dll
+msys2-runtime
+
 mintty
 zsh
 vim
