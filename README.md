@@ -11,4 +11,4 @@ edit [pacman.conf](pacman.conf) (msys2 mirror) and
 
 - run package.sh
 
-will generate `i686.7z` and `x86_64.7z` containing `usr/` / `etc/`.
+will generate `x86_64.7z` containing `usr/` / `etc/`.

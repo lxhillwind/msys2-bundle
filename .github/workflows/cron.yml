@@ -24,8 +24,7 @@ jobs:
     - name: Checksum
       id: checksum
       run: |
-        printf '::set-output name=i686::%s\n' $(sha1sum i686.7z | cut -d' ' -f1);
-        printf '::set-output name=x86_64::%s\n' $(sha1sum x86_64.7z | cut -d' ' -f1);
+        printf '::set-output name=x86_64::%s\n' $(sha256sum x86_64.7z | cut -d' ' -f1);
       # fix vim hi '
 
     - name: Create Release
@@ -41,20 +40,9 @@ jobs:
         body: |
           Package ${{ steps.latest-ver-get.outputs.latest }}
 
-          sha1sum:
+          sha256sum:
 
-          - `${{ steps.checksum.outputs.i686 }}  i686.7z`
           - `${{ steps.checksum.outputs.x86_64 }}  x86_64.7z`
-
-    - name: Upload Release Asset i686
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-        asset_path: ./i686.7z
-        asset_name: i686.7z
-        asset_content_type: application/x-7z-compressed
 
     - name: Upload Release Asset x86_64
       uses: actions/upload-release-asset@v1

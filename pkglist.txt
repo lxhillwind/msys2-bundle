@@ -1,5 +1,9 @@
 mintty
 zsh
+vim
+tmux
+
+bash
 
 coreutils
 diffutils
